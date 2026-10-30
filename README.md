@@ -1,4 +1,4 @@
-# Support Engineer — Practical Exercise
+# Network Engineer — Practical Exercise
 
 Thanks for taking the time to do this. Plan for **roughly 1.5–2 hours**. It's
 layered on purpose — **we don't expect everyone to find everything.** We're more
@@ -17,7 +17,8 @@ Everything you need is in this repo:
 | `system-brief.md`   | A one-page brief on the (fictional) "RoomSense" device & system. **Read this first.** |
 | `rosewood.db`       | A small SQLite database — a snapshot of two care facilities' fleets. |
 | `schema.sql`        | The database structure, with the columns explained.            |
-| `TASKS.md`          | Four tasks.                                                     |
+| `device-logs.md`    | Device-side log excerpts for one unit, used in Task 2.         |
+| `TASKS.md`          | Five tasks.                                                     |
 
 There's nothing to install or code, and no trick questions. Where the brief
 doesn't answer something, that's on purpose — part of the job is knowing what

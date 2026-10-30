@@ -43,6 +43,18 @@ A few things worth keeping in mind:
 - Not everything that looks alarming in the logs is an active problem. Say what
   you think is a real fault versus noise, and why.
 
+`device-logs.md` has device-side logs for two units in this set (one, plus a
+healthy neighbour for comparison). If your audit turns up a unit whose heartbeat
+history alone doesn't tell the full story, check whether its log is one of the
+two included.
+
+**2a.** For the unit whose log shows a repeating problem: write a one-liner
+(`grep`/`awk`, or a few lines of Python — whatever you're comfortable with) that
+counts how many times its network link dropped in the window shown — not just
+how many times it fully restarted. You don't need to run it anywhere real; just
+show the command and what it would output, and say in a sentence what the gap
+between those two counts tells you.
+
 ---
 
 ## Task 3 — Reply to the customer
@@ -74,3 +86,44 @@ who is and isn't affected right now).
 
 If there's anything else you'd flag to the team while you're in here — even if
 it's not an outright fault — mention it at the end.
+
+---
+
+## Task 5 — One more scenario (no database needed)
+
+A third facility, **Oakford Grange**, is having a new wing wired up for RoomSense
+units. You're told:
+
+- The wing has its own PoE switch, freshly installed, uplinked back to the
+  building's core switch.
+- DHCP for the whole building is handled by one server in the comms room, on
+  the other side of the core switch from this wing.
+- The building's firewall sits between the core switch and the internet.
+
+On install day, 8 of the 10 new units never appear in the Console. The other 2
+come up fine. You pull the device-side log off one of each (this is all the
+unit itself reports — nothing from the building's network):
+
+```
+-- OG-02 (one of the two that came up fine) --
+kernel: eth0: Link is Up - 100Mbps/Full - PoE: power good
+dhclient: DHCPDISCOVER on eth0 - interval 3
+dhclient: DHCPOFFER from 10.40.0.1
+dhclient: DHCPACK from 10.40.0.1, lease 10.40.0.133 for 43200 seconds
+smithd: INFO smith::postman: Posting successful
+
+-- OG-07 (one of the eight that never appeared) --
+kernel: eth0: Link is Up - 100Mbps/Full - PoE: power good
+dhclient: DHCPDISCOVER on eth0 - interval 3
+dhclient: DHCPDISCOVER on eth0 - interval 6
+dhclient: DHCPDISCOVER on eth0 - interval 11
+dhclient: DHCPDISCOVER on eth0 - interval 20
+dhclient: No DHCPOFFERS received.
+```
+
+**What does this rule in and out, and what's your best guess at what's actually
+wrong?** Then **say what you'd check or ask the building's IT team for** to
+confirm it — you don't control the DHCP server, the VLAN config, or the
+firewall, so be specific about what you'd need from them versus what you can
+verify yourself from the device side. You don't need a definitive answer; we
+want to see how you reason about a network you don't fully control.
